@@ -3,7 +3,7 @@ import StoreBadges from "./StoreBadges";
 
 export default function Goal() {
     return (
-        <div className='w-screen h-screen min-h-screen bg-white px-10 lg:px-20 py-10 lg:py-0 flex flex-col lg:flex-row justify-between items-center relative overflow-clip'>
+        <div className='w-screen h-screen min-h-screen bg-white px-10 lg:px-20 py-10 lg:py-0 flex flex-col lg:flex-row justify-between items-center relative overflow-clip select-none'>
 
             <PopItems />
 
