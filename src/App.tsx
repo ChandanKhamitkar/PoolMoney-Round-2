@@ -1,14 +1,13 @@
-import FreeCoins from './components/FreeCoins'
-import Goal from './components/Goal'
-import Marquee from './components/Marquee'
+import FreeCoins from './components/freeCoins/FreeCoins'
+import Goal from './components/goal/Goal'
+import Marquee from './components/marquee/Marquee'
 
 function App() {
-
   return (
     <>
-      <FreeCoins/>
-      <Marquee/>
-      <Goal/>
+      <FreeCoins />
+      <Marquee />
+      <Goal />
     </>
   )
 }

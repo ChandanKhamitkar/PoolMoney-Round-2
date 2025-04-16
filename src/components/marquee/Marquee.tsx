@@ -9,7 +9,7 @@ export default function Marquee() {
 
             {/* Main Content */}
             <div className="relative z-10 w-full h-full inset-0 backdrop-blur-2xl flex flex-col justify-center items-center text-center">
-                <p className="text-7xl font-bold text-white">2000+ Goals <br /> You can save for</p>
+                <p className="text-6xl lg:text-7xl font-bold text-white">2000+ Goals <br /> You can save for</p>
                 <ScrollingGoals />
             </div>
         </div>
