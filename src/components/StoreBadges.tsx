@@ -5,7 +5,7 @@ export default function StoreBadges() {
         <div className="flex justify-start items-center mt-4 space-x-4">
                     {/* PlayStore */}
                     <div className="bg-black px-2 py-1 rounded-lg flex space-x-3 cursor-pointer">
-                        <img src="src\assets\playstore.png" alt="Playstore Icon" className="w-7 object-contain" />
+                        <img src="/playstore.png" alt="Playstore Icon" className="w-7 object-contain" />
                         <p className="flex flex-col justify-start items-start text-white">
                             <span className="flex justify-center items-center text-xs font-semibold mb-0">
                                 4.8
@@ -19,7 +19,7 @@ export default function StoreBadges() {
 
                     {/* Apple Store */}
                     <div className="bg-black px-2 py-1 rounded-lg flex space-x-3 justify-center items-center cursor-pointer">
-                    <img src="src\assets\appstore.png" alt="Playstore Icon" className="w-7 object-contain" />
+                    <img src="/appstore.png" alt="Playstore Icon" className="w-7 object-contain" />
                         <p className="flex flex-col justify-start items-start text-white">
                             <span className="text-xs mb-0">
                                 Get it on

@@ -11,7 +11,7 @@ export default function Goal() {
             <LeftGoalSection />
 
             {/* Right Section */}
-            <img src="src\assets\phones.png" alt="Phone mockup preview" className="h-[90%] z-10" />
+            <img src="/phones.png" alt="Phone mockup preview" className="h-[90%] z-10" />
         </div>
     )
 };
@@ -19,7 +19,7 @@ export default function Goal() {
 const PopItems = () => {
     return (
         <>
-            <img src="src\assets\circle.png" alt="Circle" className="absolute top-0 right-0 h-3/4 blur-xs" />
+            <img src="/circle.png" alt="Circle" className="absolute top-0 right-0 h-3/4 blur-xs" />
             <div className="absolute bottom-0 left-0 transform translate-y-1/2 w-[300px] h-[300px] rounded-full bg-gradient-to-b from-[#4C42FD 00] to-[#4C42FD] blur-lg opacity-40 shadow-lg rotate-45 "></div>
         </>
     )

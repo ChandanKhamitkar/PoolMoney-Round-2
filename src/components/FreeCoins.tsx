@@ -34,7 +34,7 @@ const LeftSectionCoins = () => {
             {/* Users Section */}
             <div className="flex flex-col space-y-3 text-white">
                 <div className="flex items-center space-x-6">
-                    <img src="src/assets/public-avatars.png" alt="User Avatars" className="h-10" />
+                    <img src="/public-avatars.png" alt="User Avatars" className="h-10" />
 
                     <div className="flex items-center space-x-3">
                         <FaSortUp className="text-white size-4" />
@@ -65,7 +65,7 @@ const BottomCircleSection = () => {
 
             {/* Phone */}
             <img
-                src="src/assets/iPhone.png"
+                src="/iPhone.png"
                 alt="Preview Phone Mockup"
                 className="absolute h-[70%] left-1/2 bottom-0 translate-x-[-50%] translate-y-[10%] drop-shadow-xl"
             />
