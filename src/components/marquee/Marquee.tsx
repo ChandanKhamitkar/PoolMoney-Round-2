@@ -1,8 +1,9 @@
 import GoalCard, { IconName } from "./GoalCard";
+import { goalsList } from "../../utils/marquee/data";
 
 export default function Marquee() {
     return (
-        <div className="w-screen h-screen min-h-screen bg-[#4C42FD] relative overflow-clip">
+        <div className="w-screen h-screen min-h-screen bg-pool-primary relative overflow-clip">
 
             {/* Blur Spheres*/}
             <BgGlow />
@@ -34,21 +35,21 @@ const ScrollingGoals = () => {
         <div className="mt-10 space-y-6 w-full h-fit overflow-hidden py-6 relative">
 
             {/* Fade Left */}
-            <div className="absolute left-0 top-0 h-full w-48 z-20 pointer-events-none blur-xl bg-gradient-to-r from-[#4C42FD] via-[#4C42FD]/40 to-transparent" />
+            <div className="absolute left-0 top-0 h-full w-48 z-20 pointer-events-none blur-xl bg-gradient-to-r from-pool-primary via-pool-primary/40 to-transparent" />
 
             {/* Fade Right */}
-            <div className="absolute right-0 top-0 h-full w-48 z-20 pointer-events-none blur-xl bg-gradient-to-l from-[#4C42FD] via-[#4C42FD]/40 to-transparent" />
+            <div className="absolute right-0 top-0 h-full w-48 z-20 pointer-events-none blur-xl bg-gradient-to-l from-pool-primary via-pool-primary/40 to-transparent" />
 
             {/* Row 1 */}
             <div className="scroll-left">
-                {[...goals, ...goals].map((item, index) => (
+                {[...goalsList, ...goalsList].map((item, index) => (
                     <GoalCard label={item.label} icon={item.iconName as IconName} key={`left-${index}`} />
                 ))}
             </div>
 
             {/* Row 2 */}
             <div className="scroll-right">
-                {[...goals, ...goals].map((item, index) => (
+                {[...goalsList, ...goalsList].map((item, index) => (
                     <GoalCard label={item.label} icon={item.iconName as IconName} key={`right-${index}`} />
                 ))}
             </div>
@@ -56,45 +57,3 @@ const ScrollingGoals = () => {
     );
 };
 
-const goals = [
-    {
-        label: "Electronics",
-        iconName: "electronics",
-    },
-    {
-        label: "iPhone",
-        iconName: "iphone",
-    },
-    {
-        label: "Travel",
-        iconName: "travel",
-    },
-    {
-        label: "Luxury Brands",
-        iconName: "luxury",
-    },
-    {
-        label: "Gadgets",
-        iconName: "gadgets",
-    },
-    {
-        label: "Electronics",
-        iconName: "electronics",
-    },
-    {
-        label: "iPhone",
-        iconName: "iphone",
-    },
-    {
-        label: "Travel",
-        iconName: "travel",
-    },
-    {
-        label: "Luxury Brands",
-        iconName: "luxury",
-    },
-    {
-        label: "Gadgets",
-        iconName: "gadgets",
-    },
-]
