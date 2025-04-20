@@ -4,6 +4,11 @@ import Marquee from './components/marquee/Marquee'
 import { useRef } from 'react';
 import { useGsapEffect } from './hooks/useGsapEffect';
 import { appAnimation } from './animations/app/appAnimation';
+import { registerGsapPlugins } from './animations/gsapConfig';
+
+if (typeof window !== "undefined") {
+    registerGsapPlugins();
+}
 
 function App() {
   const preLoaderRef = useRef(null);
