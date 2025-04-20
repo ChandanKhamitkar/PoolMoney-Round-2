@@ -17,7 +17,6 @@ export default function FreeCoins() {
     return (
         <div
             ref={freeCoinContainerRef}
-            data-scroll-section
             className="w-screen h-screen min-h-screen flex flex-col lg:flex-row justify-between items-center bg-pool-primary relative overflow-hidden px-10 lg:px-20 py-24 lg:py-0 select-none">
 
             {/* Navbar */}

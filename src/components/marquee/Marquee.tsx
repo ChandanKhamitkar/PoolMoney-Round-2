@@ -16,7 +16,6 @@ export default function Marquee() {
     return (
         <div
             ref={marqueeContainerRef}
-            data-scroll-section
             className="w-screen h-screen min-h-screen bg-pool-primary relative overflow-clip select-none">
 
             {/* Blur Spheres*/}

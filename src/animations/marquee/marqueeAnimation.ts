@@ -10,7 +10,6 @@ const marqueeFun = (refContainer: any, refTitle: any) => {
       trigger: refContainer.current,
       start: "top center",
       toggleActions: "play reverse play reverse",
-      scroller: "#main-scroll",
     },
   });
 
