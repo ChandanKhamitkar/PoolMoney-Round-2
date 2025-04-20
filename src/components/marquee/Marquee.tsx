@@ -1,8 +1,9 @@
 import GoalCard, { IconName } from "./GoalCard";
-import gsap from "gsap";
 import { goalsList } from "../../utils/marquee/data";
 import { registerGsapPlugins } from "../../animations/gsapConfig";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useGsapEffect } from "../../hooks/useGsapEffect";
+import { marqueeAnimation } from "../../animations/marquee/marqueeAnimation";
 
 if (typeof window !== "undefined") {
     registerGsapPlugins();
@@ -11,39 +12,11 @@ if (typeof window !== "undefined") {
 export default function Marquee() {
     const marqueeContainerRef = useRef<HTMLDivElement>(null);
     const marqueeTitleRef = useRef<HTMLParagraphElement>(null);
-    useEffect(() => {
-        const mainTimeline = gsap.timeline({
-            scrollTrigger: {
-                trigger: marqueeContainerRef.current,
-                start: "top center",
-                toggleActions: "play reverse play reverse",
-                scroller: "#main-scroll",
-            }
-        });
+    
+    useGsapEffect(() => {
+        marqueeAnimation(marqueeContainerRef, marqueeTitleRef);
+    });
 
-        mainTimeline.fromTo(
-            marqueeTitleRef.current,
-            {
-                opacity: 0,
-                y: 50,
-                scale: 0.9,
-                filter: "blur(10px)",
-            },
-            {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                filter: "blur(0px)",
-                duration: 2,
-                ease: "power3.out",
-            }
-        )
-
-        return () => {
-            mainTimeline.scrollTrigger?.kill();
-            mainTimeline.kill();
-        };
-    }, [])
     return (
         <div
             ref={marqueeContainerRef}

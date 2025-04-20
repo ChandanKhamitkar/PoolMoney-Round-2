@@ -1,8 +1,9 @@
 import { FaSortUp } from "react-icons/fa";
 import Navbar from "../navbar/Navbar";
 import { registerGsapPlugins } from "../../animations/gsapConfig";
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { useRef } from "react";
+import { useGsapEffect } from "../../hooks/useGsapEffect";
+import { freeCoinsAnimation } from "../../animations/freecoins/freeCoinsAnimation";
 
 if (typeof window !== "undefined") {
     registerGsapPlugins();
@@ -13,39 +14,10 @@ export default function FreeCoins() {
     const leftSectionRef = useRef<HTMLDivElement>(null!);
     const bottomSectionRef = useRef<HTMLDivElement>(null!);
 
-    useEffect(() => {
-        const mainTimeline = gsap.timeline({
-            scrollTrigger: {
-                trigger: freeCoinContainerRef.current,
-                start: "top center",
-                toggleActions: "play reverse play reverse",
-                scroller: "#main-scroll"
-            }
-        });
+    useGsapEffect(() => {
+        freeCoinsAnimation(freeCoinContainerRef, leftSectionRef, bottomSectionRef);
+    });
 
-        mainTimeline.fromTo(
-            [leftSectionRef.current, bottomSectionRef.current],
-            {
-                opacity: 0,
-                y: 50,
-                scale: 0.9,
-                filter: "blur(10px)",
-            },
-            {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                filter: "blur(0px)",
-                duration: 2,
-                ease: "power3.out",
-            }
-        );
-
-        return () => {
-            mainTimeline.scrollTrigger?.kill();
-            mainTimeline.kill();
-        };
-    }, [])
     return (
         <div
             ref={freeCoinContainerRef}
