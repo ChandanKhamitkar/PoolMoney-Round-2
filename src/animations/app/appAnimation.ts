@@ -7,10 +7,12 @@ export const appAnimation = (
   refScrollRef: any,
   reflocolScroll: any
 ) => {
+  // Initial setup
   gsap.set(refScrollRef.current, {
     autoAlpha: 0,
   });
 
+  // PreLoader animation
   const handleComplete = () => {
     const t1 = gsap.timeline();
     t1.to(refPreLoader.current, {
@@ -23,36 +25,53 @@ export const appAnimation = (
         duration: 0.8,
         autoAlpha: 1,
         ease: "power2.inOut",
+        onComplete: initLocomotiveScroll, // Initialize after reveal animation
       },
       "-=0.4"
     );
   };
 
+  // Initialize on load
   if (document.readyState === "complete") {
     handleComplete();
   } else {
     window.addEventListener("load", handleComplete, { once: true });
   }
 
-  // Initialize LocomotiveScroll
-  if (refScrollRef.current) {
+  // Function to properly initialize Locomotive and ScrollTrigger
+  function initLocomotiveScroll() {
+    if (!refScrollRef.current) return;
+
+    // Kill any existing instances first
+    if (reflocolScroll.current) {
+      reflocolScroll.current.destroy();
+    }
+
+    // Create new instance
     reflocolScroll.current = new LocomotiveScroll({
       el: refScrollRef.current,
       smooth: true,
       lerp: 0.1,
-      getDirection: true,
-      smartphone: {
-        smooth: true,
-      },
     });
 
+    // Set up ScrollTrigger
+    ScrollTrigger.defaults({ scroller: refScrollRef.current });
+
+    // Update ScrollTrigger when locomotive scroll updates
     reflocolScroll.current.on("scroll", ScrollTrigger.update);
 
+    // Define scroll proxy
     ScrollTrigger.scrollerProxy(refScrollRef.current, {
       scrollTop(value) {
-        return arguments.length
-          ? reflocolScroll.current.scrollTo(value, 0, 0)
-          : reflocolScroll.current.scroll.instance.scroll.y;
+        if (reflocolScroll.current) {
+          return arguments.length
+            ? reflocolScroll.current.scrollTo(value, {
+                duration: 0,
+                disableLerp: true,
+              })
+            : reflocolScroll.current.scroll.instance.scroll.y;
+        }
+        return 0;
       },
       getBoundingClientRect() {
         return {
@@ -62,20 +81,27 @@ export const appAnimation = (
           height: window.innerHeight,
         };
       },
-      // @ts-ignore
       pinType: refScrollRef.current.style.transform ? "transform" : "fixed",
     });
 
-    ScrollTrigger.addEventListener("refresh", () =>
-      reflocolScroll.current.update()
-    );
+    // Refresh ScrollTrigger after setup
+    ScrollTrigger.addEventListener("refresh", () => {
+      if (reflocolScroll.current) reflocolScroll.current.update();
+    });
+
+    // Force refresh all ScrollTriggers
     ScrollTrigger.refresh();
   }
 
+  // Return cleanup function
   return () => {
-    if (reflocolScroll.current) reflocolScroll.current.destroy();
-    ScrollTrigger.addEventListener("refresh", () =>
-      reflocolScroll.current?.update()
-    );
+    if (reflocolScroll.current) {
+      reflocolScroll.current.destroy();
+    }
+    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    ScrollTrigger.clearScrollMemory();
+    ScrollTrigger.removeEventListener("refresh", () => {
+      if (reflocolScroll.current) reflocolScroll.current.update();
+    });
   };
 };

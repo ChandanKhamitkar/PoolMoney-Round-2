@@ -7,7 +7,7 @@ import { appAnimation } from './animations/app/appAnimation';
 import { registerGsapPlugins } from './animations/gsapConfig';
 
 if (typeof window !== "undefined") {
-    registerGsapPlugins();
+  registerGsapPlugins();
 }
 
 function App() {
@@ -16,7 +16,22 @@ function App() {
   const locoScroll = useRef<any>(null);
 
   useGsapEffect(() => {
-    appAnimation(preLoaderRef, scrollRef, locoScroll);
+    const cleanup = appAnimation(preLoaderRef, scrollRef, locoScroll);
+
+    // Add resize handler
+    const handleResize = () => {
+      if (locoScroll.current) {
+        locoScroll.current.update();
+        ScrollTrigger.refresh();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      cleanup();
+      window.removeEventListener('resize', handleResize);
+    };
   });
 
   return (
@@ -30,7 +45,7 @@ function App() {
           <p className={`mt-4 text-lg font-semibold text-white`}>Pooling in PoolMoney</p>
         </div>
       </div>
-      
+
       <div id="main-scroll" data-scroll-container ref={scrollRef}>
         <Goal />
         <Marquee />

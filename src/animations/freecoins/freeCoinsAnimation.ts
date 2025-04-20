@@ -33,7 +33,9 @@ export const freeCoinsAnimation = (
   );
 
   return () => {
-    mainTimeline.scrollTrigger?.kill();
+    if (mainTimeline.scrollTrigger) {
+      mainTimeline.scrollTrigger.kill();
+    }
     mainTimeline.kill();
   };
 };

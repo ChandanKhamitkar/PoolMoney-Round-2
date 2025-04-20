@@ -11,6 +11,7 @@ export default function Marquee() {
 
     useGsapEffect(() => {
         marqueeAnimation(marqueeContainerRef, marqueeTitleRef);
+        console.log("query selector", document.querySelector("[data-scroll-container]"));
     });
 
     return (
