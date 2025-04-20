@@ -1,30 +1,83 @@
 import { FaSortUp } from "react-icons/fa";
 import Navbar from "../navbar/Navbar";
+import { registerGsapPlugins } from "../../animations/gsapConfig";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+
+if (typeof window !== "undefined") {
+    registerGsapPlugins();
+}
 
 export default function FreeCoins() {
+    const freeCoinContainerRef = useRef<HTMLDivElement>(null);
+    const leftSectionRef = useRef<HTMLDivElement>(null!);
+    const bottomSectionRef = useRef<HTMLDivElement>(null!);
+
+    useEffect(() => {
+        const mainTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: freeCoinContainerRef.current,
+                start: "top center",
+                toggleActions: "play reverse play reverse",
+                scroller: "#main-scroll"
+            }
+        });
+
+        mainTimeline.fromTo(
+            [leftSectionRef.current, bottomSectionRef.current],
+            {
+                opacity: 0,
+                y: 50,
+                scale: 0.9,
+                filter: "blur(10px)",
+            },
+            {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+                duration: 2,
+                ease: "power3.out",
+            }
+        );
+
+        return () => {
+            mainTimeline.scrollTrigger?.kill();
+            mainTimeline.kill();
+        };
+    }, [])
     return (
-        <div className="w-screen h-screen min-h-screen flex flex-col lg:flex-row justify-between items-center bg-pool-primary relative overflow-hidden px-10 lg:px-20 py-24 lg:py-0 select-none">
+        <div
+            ref={freeCoinContainerRef}
+            data-scroll-section
+            className="w-screen h-screen min-h-screen flex flex-col lg:flex-row justify-between items-center bg-pool-primary relative overflow-hidden px-10 lg:px-20 py-24 lg:py-0 select-none">
 
             {/* Navbar */}
             <Navbar />
 
             {/* Left Section */}
-            <LeftSectionCoins />
-
+            <LeftSectionCoins leftSectionRef={leftSectionRef} />
             {/* Right Circle + Phone */}
-            <BottomCircleSection />
-
+            <BottomCircleSection bottomSectionRef={bottomSectionRef} />
         </div>
     );
 }
 
-const LeftSectionCoins = () => {
+interface SectionProps {
+    leftSectionRef?: React.RefObject<HTMLDivElement>;
+    bottomSectionRef?: React.RefObject<HTMLDivElement>;
+}
+
+const LeftSectionCoins = ({ leftSectionRef }: SectionProps) => {
+
     return (
-        <div className="w-full lg:max-w-[50%] flex flex-col justify-center space-y-8 z-10">
+        <div
+            ref={leftSectionRef}
+            className="w-full lg:max-w-[50%] flex flex-col justify-center space-y-8 z-10">
 
             {/* Title */}
             <h1 className="text-white text-4xl mobile-sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
-                Earn ₹200 coins monthly on Pooling Money
+                Get ₹200 coins every month on Pooling Money
             </h1>
 
             {/* Subtext */}
@@ -50,9 +103,10 @@ const LeftSectionCoins = () => {
     )
 }
 
-const BottomCircleSection = () => {
+const BottomCircleSection = ({ bottomSectionRef }: SectionProps) => {
     return (
-        <div className="absolute bottom-0 right-1/2 lg:right-0 translate-x-1/2 lg:translate-x-0 w-[90vw] max-w-[760px] aspect-square z-0">
+        <div ref={bottomSectionRef}
+            className="absolute bottom-0 right-1/2 lg:right-0 translate-x-1/2 lg:translate-x-0 w-[90vw] max-w-[760px] aspect-square z-0">
 
             {/* Radial glow behind the circle */}
             <div className="absolute w-[150%] h-[150%] left-1/2 bottom-0 translate-x-[-50%] translate-y-1/2 bg-white opacity-5 blur-[200px] rounded-full z-[-1] pointer-events-none"></div>
