@@ -26,7 +26,7 @@ const marqueeFun = (refContainer: any, refTitle: any) => {
       y: 0,
       scale: 1,
       filter: "blur(0px)",
-      duration: 2,
+      duration: 1,
       ease: "power3.out",
     }
   );
