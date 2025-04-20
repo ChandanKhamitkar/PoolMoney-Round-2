@@ -18,7 +18,6 @@ export default function Goal() {
     return (
         <div
             ref={goalContainerRef}
-            data-scroll-section
             className='w-screen h-screen min-h-screen bg-white px-6 sm:px-10 lg:px-20 py-10 lg:py-0 flex flex-col lg:flex-row justify-between items-center relative overflow-clip select-none'>
 
             <PopItems />

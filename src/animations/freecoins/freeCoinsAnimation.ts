@@ -1,6 +1,10 @@
 import gsap from "gsap";
 
-export const freeCoinsAnimation = (refContainer: any, refLeft: any, refBottom: any) => {
+export const freeCoinsAnimation = (
+  refContainer: any,
+  refLeft: any,
+  refBottom: any
+) => {
   return freeCoinsFun(refContainer, refLeft, refBottom);
 };
 
@@ -10,7 +14,6 @@ const freeCoinsFun = (refContainer: any, refLeft: any, refBottom: any) => {
       trigger: refContainer.current,
       start: "top center",
       toggleActions: "play reverse play reverse",
-      scroller: "#main-scroll",
     },
   });
 

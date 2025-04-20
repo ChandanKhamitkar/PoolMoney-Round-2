@@ -5,18 +5,18 @@ import { useRef } from 'react';
 import { useGsapEffect } from './hooks/useGsapEffect';
 import { appAnimation } from './animations/app/appAnimation';
 import { registerGsapPlugins } from './animations/gsapConfig';
+import ReactLenis from "lenis/react";
 
 if (typeof window !== "undefined") {
-    registerGsapPlugins();
+  registerGsapPlugins();
 }
 
 function App() {
   const preLoaderRef = useRef(null);
   const scrollRef = useRef(null);
-  const locoScroll = useRef<any>(null);
 
   useGsapEffect(() => {
-    appAnimation(preLoaderRef, scrollRef, locoScroll);
+    appAnimation(preLoaderRef, scrollRef);
   });
 
   return (
@@ -30,11 +30,13 @@ function App() {
           <p className={`mt-4 text-lg font-semibold text-white`}>Pooling in PoolMoney</p>
         </div>
       </div>
-      
-      <div id="main-scroll" data-scroll-container ref={scrollRef}>
-        <Goal />
-        <Marquee />
-        <FreeCoins />
+
+      <div ref={scrollRef}>
+        <ReactLenis root className="w-screen h-screen overflow-y-scroll">
+          <Goal />
+          <Marquee />
+          <FreeCoins />
+        </ReactLenis>
       </div>
     </>
   )

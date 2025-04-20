@@ -12,7 +12,6 @@ export const goalAnimation = (refContainer: any, refSlate: any) => {
         end: "+=300px",
         scrub: 0.5,
         toggleActions: "play reverse play reverse",
-        scroller: "#main-scroll"
     }
   });
 };
