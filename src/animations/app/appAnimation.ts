@@ -2,11 +2,11 @@ import gsap from "gsap";
 import LocomotiveScroll from "locomotive-scroll";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export const appAnimation = (
-  refPreLoader: any,
-  refScrollRef: any,
-  reflocolScroll: any
-) => {
+export const appAnimation = (refPreLoader: any, refScrollRef: any, reflocolScroll: any) => {
+  return appFun(refPreLoader, refScrollRef, reflocolScroll);
+};
+
+const appFun = (refPreLoader: any, refScrollRef: any, reflocolScroll: any) => {
   // Initial setup
   gsap.set(refScrollRef.current, {
     autoAlpha: 0,
@@ -25,7 +25,6 @@ export const appAnimation = (
         duration: 0.8,
         autoAlpha: 1,
         ease: "power2.inOut",
-        onComplete: initLocomotiveScroll, // Initialize after reveal animation
       },
       "-=0.4"
     );
@@ -38,40 +37,29 @@ export const appAnimation = (
     window.addEventListener("load", handleComplete, { once: true });
   }
 
-  // Function to properly initialize Locomotive and ScrollTrigger
-  function initLocomotiveScroll() {
-    if (!refScrollRef.current) return;
-
-    // Kill any existing instances first
-    if (reflocolScroll.current) {
-      reflocolScroll.current.destroy();
-    }
-
+  // Initialize LocomotiveScroll
+  if (refScrollRef.current) {
     // Create new instance
     reflocolScroll.current = new LocomotiveScroll({
       el: refScrollRef.current,
       smooth: true,
       lerp: 0.1,
+      getDirection: true,
+      smartphone: {
+        smooth: true,
+      }
     });
 
     // Set up ScrollTrigger
-    ScrollTrigger.defaults({ scroller: refScrollRef.current });
-
     // Update ScrollTrigger when locomotive scroll updates
     reflocolScroll.current.on("scroll", ScrollTrigger.update);
 
     // Define scroll proxy
     ScrollTrigger.scrollerProxy(refScrollRef.current, {
       scrollTop(value) {
-        if (reflocolScroll.current) {
-          return arguments.length
-            ? reflocolScroll.current.scrollTo(value, {
-                duration: 0,
-                disableLerp: true,
-              })
-            : reflocolScroll.current.scroll.instance.scroll.y;
-        }
-        return 0;
+        return arguments.length
+          ? reflocolScroll.current.scrollTo(value, 0, 0)
+          : reflocolScroll.current.scroll.instance.scroll.y;
       },
       getBoundingClientRect() {
         return {
@@ -81,27 +69,20 @@ export const appAnimation = (
           height: window.innerHeight,
         };
       },
+      // @ts-ignore
       pinType: refScrollRef.current.style.transform ? "transform" : "fixed",
     });
 
     // Refresh ScrollTrigger after setup
-    ScrollTrigger.addEventListener("refresh", () => {
-      if (reflocolScroll.current) reflocolScroll.current.update();
-    });
-
+    ScrollTrigger.addEventListener("refresh", () => reflocolScroll.current.update());
+    
     // Force refresh all ScrollTriggers
     ScrollTrigger.refresh();
   }
 
   // Return cleanup function
   return () => {
-    if (reflocolScroll.current) {
-      reflocolScroll.current.destroy();
-    }
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    ScrollTrigger.clearScrollMemory();
-    ScrollTrigger.removeEventListener("refresh", () => {
-      if (reflocolScroll.current) reflocolScroll.current.update();
-    });
+    if (reflocolScroll.current) reflocolScroll.current.destroy();
+    ScrollTrigger.removeEventListener("refresh", () => reflocolScroll.current?.update());
   };
 };
