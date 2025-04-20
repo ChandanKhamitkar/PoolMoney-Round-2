@@ -29,7 +29,7 @@ export default function Goal() {
             <img ref={phoneRef} src="/phones.png" alt="Phone mockup preview" className="h-[80%] object-cover 2xl:h-[90%] z-10 self-end lg:self-auto" />
 
             {/* Slate */}
-            <div ref={goalSlateRef} className="absolute inset-0 w-full h-full opacity-0 bg-pool-primary "></div>
+            <div ref={goalSlateRef} className="absolute inset-0 w-full h-full opacity-0 bg-white backdrop-blur-3xl "></div>
 
             {/* Gold Coin */}
             <img src="/gold-rupee-coin.png" alt="BillBot Image" className="w-16 sm:w-24 h-16 sm:h-24 animate-bounce absolute bottom-10 right-10" />
