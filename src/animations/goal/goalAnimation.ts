@@ -7,12 +7,12 @@ export const goalAnimation = (refContainer: any, refSlate: any) => {
     duration: 0.2,
     ease: "power2.inOut",
     scrollTrigger: {
-        trigger: refContainer.current,
-        start: "top top",
-        end: "+=300px",
-        scrub: 0.5,
-        toggleActions: "play reverse play reverse",
-        scroller: "#main-scroll"
-    }
+      trigger: refContainer.current,
+      start: "top top",
+      end: "+=300px",
+      scrub: 0.5,
+      toggleActions: "play reverse play reverse",
+      scroller: document.querySelector("[data-scroll-container]"),
+    },
   });
 };

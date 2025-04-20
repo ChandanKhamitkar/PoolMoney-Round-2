@@ -7,11 +7,6 @@ export const appAnimation = (
   refScrollRef: any,
   reflocolScroll: any
 ) => {
-  return appFun(refPreLoader, refScrollRef, reflocolScroll);
-};
-
-const appFun = (refPreLoader: any, refScrollRef: any, reflocolScroll: any) => {
-
   gsap.set(refScrollRef.current, {
     autoAlpha: 0,
   });
@@ -48,7 +43,7 @@ const appFun = (refPreLoader: any, refScrollRef: any, reflocolScroll: any) => {
       getDirection: true,
       smartphone: {
         smooth: true,
-      }
+      },
     });
 
     reflocolScroll.current.on("scroll", ScrollTrigger.update);
