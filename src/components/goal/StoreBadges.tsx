@@ -1,12 +1,8 @@
 import { FaStar } from "react-icons/fa";
 import { useRef } from "react";
-import { registerGsapPlugins } from "../../animations/gsapConfig";
 import { blurReveal } from "../../animations/shared/blurReveal";
 import { useGsapEffect } from "../../hooks/useGsapEffect";
 
-if (typeof window !== "undefined") {
-    registerGsapPlugins();
-}
 export default function StoreBadges() {
     const badgesRef = useRef(null);
     useGsapEffect(() => {

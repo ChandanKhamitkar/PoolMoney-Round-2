@@ -1,18 +1,14 @@
 import GoalCard, { IconName } from "./GoalCard";
 import { goalsList } from "../../utils/marquee/data";
-import { registerGsapPlugins } from "../../animations/gsapConfig";
 import { useRef } from "react";
 import { useGsapEffect } from "../../hooks/useGsapEffect";
 import { marqueeAnimation } from "../../animations/marquee/marqueeAnimation";
 
-if (typeof window !== "undefined") {
-    registerGsapPlugins();
-}
 
 export default function Marquee() {
     const marqueeContainerRef = useRef<HTMLDivElement>(null);
     const marqueeTitleRef = useRef<HTMLParagraphElement>(null);
-    
+
     useGsapEffect(() => {
         marqueeAnimation(marqueeContainerRef, marqueeTitleRef);
     });

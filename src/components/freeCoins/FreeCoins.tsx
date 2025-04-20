@@ -1,13 +1,9 @@
 import { FaSortUp } from "react-icons/fa";
 import Navbar from "../navbar/Navbar";
-import { registerGsapPlugins } from "../../animations/gsapConfig";
 import { useRef } from "react";
 import { useGsapEffect } from "../../hooks/useGsapEffect";
 import { freeCoinsAnimation } from "../../animations/freecoins/freeCoinsAnimation";
 
-if (typeof window !== "undefined") {
-    registerGsapPlugins();
-}
 
 export default function FreeCoins() {
     const freeCoinContainerRef = useRef<HTMLDivElement>(null);

@@ -1,6 +1,5 @@
 import gsap from "gsap";
 import LocomotiveScroll from "locomotive-scroll";
-import { registerGsapPlugins } from "../gsapConfig";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const appAnimation = (
@@ -12,7 +11,6 @@ export const appAnimation = (
 };
 
 const appFun = (refPreLoader: any, refScrollRef: any, reflocolScroll: any) => {
-  registerGsapPlugins();
 
   gsap.set(refScrollRef.current, {
     autoAlpha: 0,

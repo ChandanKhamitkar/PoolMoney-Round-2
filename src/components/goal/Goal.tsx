@@ -1,14 +1,9 @@
 import { FaCircleCheck } from "react-icons/fa6";
 import StoreBadges from "./StoreBadges";
-import { registerGsapPlugins } from "../../animations/gsapConfig";
 import { useRef } from "react";
 import { useGsapEffect } from "../../hooks/useGsapEffect";
 import { blurReveal } from "../../animations/shared/blurReveal";
 import { goalAnimation } from "../../animations/goal/goalAnimation";
-
-if(typeof window !== "undefined"){
-    registerGsapPlugins();
-}
 
 export default function Goal() {
     const phoneRef = useRef<HTMLImageElement>(null);
@@ -21,7 +16,7 @@ export default function Goal() {
     });
 
     return (
-        <div 
+        <div
             ref={goalContainerRef}
             data-scroll-section
             className='w-screen h-screen min-h-screen bg-white px-6 sm:px-10 lg:px-20 py-10 lg:py-0 flex flex-col lg:flex-row justify-between items-center relative overflow-clip select-none'>
@@ -80,7 +75,7 @@ const LeftGoalSection = () => {
             {/* <p ref={subTextRef} className="text-[#5F5CBF] text-xl md:text-2xl lg:text-3xl font-semibold">Get up to <span className="text-3xl md:text-4xl font-bold">10% off</span> <br />when you save for your dreams</p> */}
 
             {/* PlayStore + Apple Store */}
-            <StoreBadges/>
+            <StoreBadges />
         </div>
     )
 }
