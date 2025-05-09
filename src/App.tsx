@@ -28,7 +28,9 @@ function App() {
     const handleResize = () => {
       if (locoScroll.current) {
         locoScroll.current.update();
+        console.log("locomotive update is called");
         ScrollTrigger.refresh();
+        console.log("scrolltrigger referesh is called");
       }
     };
 
