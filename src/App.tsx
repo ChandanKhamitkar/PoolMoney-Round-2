@@ -57,9 +57,9 @@ function App() {
       </div>
 
       <div id="main-scroll" data-scroll-container ref={scrollRef}>
+        <FreeCoins />
         <Marquee />
         <Goal />
-        <FreeCoins />
       </div>
     </ScrollContext.Provider>
   );
