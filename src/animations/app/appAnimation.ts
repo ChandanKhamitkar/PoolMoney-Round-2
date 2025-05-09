@@ -1,65 +1,75 @@
-import gsap from "gsap";
-import LocomotiveScroll from "locomotive-scroll";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from 'gsap';
+import LocomotiveScroll from 'locomotive-scroll';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-export const appAnimation = (refPreLoader: any, refScrollRef: any, reflocolScroll: any) => {
+export const appAnimation = (
+  refPreLoader: any,
+  refScrollRef: any,
+  reflocolScroll: any
+) => {
   return appFun(refPreLoader, refScrollRef, reflocolScroll);
 };
 
-const appFun = (refPreLoader: any, refScrollRef: any, reflocolScroll: any) => {
-  // Initial setup
+const appFun = (
+  refPreLoader: any,
+  refScrollRef: any,
+  reflocolScroll: any
+) => {
+  // Set main scroll container invisible initially
   gsap.set(refScrollRef.current, {
     autoAlpha: 0,
   });
 
-  // PreLoader animation
+  // PreLoader GSAP animation
+  const t1 = gsap.timeline();
   const handleComplete = () => {
-    const t1 = gsap.timeline();
+    console.log('Running handleComplete to site content');
     t1.to(refPreLoader.current, {
       duration: 0.8,
       autoAlpha: 0,
-      ease: "power2.inOut",
+      ease: 'power2.inOut',
     }).to(
       refScrollRef.current,
       {
         duration: 0.8,
         autoAlpha: 1,
-        ease: "power2.inOut",
+        ease: 'power2.inOut',
       },
-      "-=0.4"
+      '-=0.4'
     );
   };
 
-  // Initialize on load
-  if (document.readyState === "complete") {
+  if (document.readyState === 'complete') {
+    console.log('site state : COMPLETE');
     handleComplete();
   } else {
-    window.addEventListener("load", handleComplete, { once: true });
+    window.addEventListener('load', handleComplete, { once: true });
   }
 
   // Initialize LocomotiveScroll
   if (refScrollRef.current) {
-    // Create new instance
-    reflocolScroll.current = new LocomotiveScroll({
+    const scroll = new LocomotiveScroll({
       el: refScrollRef.current,
       smooth: true,
       lerp: 0.1,
       getDirection: true,
       smartphone: {
         smooth: true,
-      }
+      },
     });
 
-    // Set up ScrollTrigger
-    // Update ScrollTrigger when locomotive scroll updates
-    reflocolScroll.current.on("scroll", ScrollTrigger.update);
+    // Assign instance to ref
+    reflocolScroll.current = scroll;
 
-    // Define scroll proxy
+    // Update ScrollTrigger on LocomotiveScroll scroll
+    scroll.on('scroll', ScrollTrigger.update);
+
+    // ScrollTrigger proxy setup
     ScrollTrigger.scrollerProxy(refScrollRef.current, {
       scrollTop(value) {
         return arguments.length
-          ? reflocolScroll.current.scrollTo(value, 0, 0)
-          : reflocolScroll.current.scroll.instance.scroll.y;
+          ? reflocolScroll.current?.scrollTo(value, 0, 0)
+          : reflocolScroll.current?.scroll.instance.scroll.y || 0;
       },
       getBoundingClientRect() {
         return {
@@ -69,20 +79,26 @@ const appFun = (refPreLoader: any, refScrollRef: any, reflocolScroll: any) => {
           height: window.innerHeight,
         };
       },
-      // @ts-ignore
-      pinType: refScrollRef.current.style.transform ? "transform" : "fixed",
+      pinType: refScrollRef.current.style.transform ? 'transform' : 'fixed',
     });
 
-    // Refresh ScrollTrigger after setup
-    ScrollTrigger.addEventListener("refresh", () => reflocolScroll.current.update());
-    
-    // Force refresh all ScrollTriggers
+    // ScrollTrigger refresh event
+    const onRefresh = () => reflocolScroll.current?.update();
+    ScrollTrigger.addEventListener('refresh', onRefresh);
+
+    // Force a refresh
     ScrollTrigger.refresh();
+
+    // Cleanup function
+    return () => {
+      t1.kill();
+      scroll.destroy();
+      ScrollTrigger.removeEventListener('refresh', onRefresh);
+    };
   }
 
-  // Return cleanup function
+  // Fallback cleanup if scroll not initialized
   return () => {
-    if (reflocolScroll.current) reflocolScroll.current.destroy();
-    ScrollTrigger.removeEventListener("refresh", () => reflocolScroll.current?.update());
+    t1.kill();
   };
 };

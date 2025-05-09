@@ -3,14 +3,15 @@ import gsap from "gsap";
 export const freeCoinsAnimation = (
   refContainer: any,
   refLeft: any,
-  refBottom: any
+  refBottom: any,
+  scroller: HTMLElement
 ) => {
   const mainTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: refContainer.current,
       start: "top center",
       toggleActions: "play reverse play reverse",
-      scroller: document.querySelector("[data-scroll-container]"),
+      scroller: scroller,
     },
   });
 

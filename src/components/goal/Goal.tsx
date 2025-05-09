@@ -4,15 +4,18 @@ import { useRef } from "react";
 import { useGsapEffect } from "../../hooks/useGsapEffect";
 import { blurReveal } from "../../animations/shared/blurReveal";
 import { goalAnimation } from "../../animations/goal/goalAnimation";
+import { useScrollContext } from "../../context/ScrollContext";
 
 export default function Goal() {
     const phoneRef = useRef<HTMLImageElement>(null);
     const goalContainerRef = useRef<HTMLDivElement>(null);
     const goalSlateRef = useRef<HTMLDivElement>(null);
+    const { scrollContainerRef } = useScrollContext();
 
     useGsapEffect(() => {
+        if (!scrollContainerRef.current) return;
         blurReveal(phoneRef);
-        goalAnimation(goalContainerRef, goalSlateRef);
+        goalAnimation(goalContainerRef, goalSlateRef, scrollContainerRef.current);
     });
 
     return (

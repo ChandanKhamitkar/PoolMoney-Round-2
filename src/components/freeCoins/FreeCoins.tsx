@@ -3,16 +3,25 @@ import Navbar from "../navbar/Navbar";
 import { useRef } from "react";
 import { useGsapEffect } from "../../hooks/useGsapEffect";
 import { freeCoinsAnimation } from "../../animations/freecoins/freeCoinsAnimation";
-
+import { useScrollContext } from "../../context/ScrollContext";
 
 export default function FreeCoins() {
     const freeCoinContainerRef = useRef<HTMLDivElement>(null);
     const leftSectionRef = useRef<HTMLDivElement>(null!);
     const bottomSectionRef = useRef<HTMLDivElement>(null!);
+    const { scrollContainerRef } = useScrollContext();
 
-    useGsapEffect(() => {
-        freeCoinsAnimation(freeCoinContainerRef, leftSectionRef, bottomSectionRef);
-    });
+  useGsapEffect(() => {
+    if (!scrollContainerRef.current) return;
+    freeCoinsAnimation(
+      freeCoinContainerRef,
+      leftSectionRef,
+      bottomSectionRef,
+      scrollContainerRef.current
+    );
+    console.log("ref received from container : freeCoins", scrollContainerRef.current);
+
+  });
 
     return (
         <div

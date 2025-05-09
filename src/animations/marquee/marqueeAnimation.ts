@@ -1,16 +1,16 @@
 import gsap from "gsap";
 
-export const marqueeAnimation = (refContainer: any, refTitle: any) => {
-  return marqueeFun(refContainer, refTitle);
-};
-
-const marqueeFun = (refContainer: any, refTitle: any) => {
+export const marqueeAnimation = (
+  refContainer: any,
+  refTitle: any,
+  scroller: HTMLElement
+) => {
   const mainTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: refContainer.current,
       start: "top center",
       toggleActions: "play reverse play reverse",
-      scroller: document.querySelector("[data-scroll-container]"),
+      scroller: scroller,
     },
   });
 

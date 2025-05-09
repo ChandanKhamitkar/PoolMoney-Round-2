@@ -3,15 +3,17 @@ import { goalsList } from "../../utils/marquee/data";
 import { useRef } from "react";
 import { useGsapEffect } from "../../hooks/useGsapEffect";
 import { marqueeAnimation } from "../../animations/marquee/marqueeAnimation";
-
+import { useScrollContext } from "../../context/ScrollContext";
 
 export default function Marquee() {
     const marqueeContainerRef = useRef<HTMLDivElement>(null);
     const marqueeTitleRef = useRef<HTMLParagraphElement>(null);
+    const { scrollContainerRef } = useScrollContext();
 
     useGsapEffect(() => {
-        marqueeAnimation(marqueeContainerRef, marqueeTitleRef);
-        console.log("query selector", document.querySelector("[data-scroll-container]"));
+        if (!scrollContainerRef.current) return;
+        marqueeAnimation(marqueeContainerRef, marqueeTitleRef, scrollContainerRef.current);
+        console.log("ref received from container : marquee", scrollContainerRef.current);
     });
 
     return (

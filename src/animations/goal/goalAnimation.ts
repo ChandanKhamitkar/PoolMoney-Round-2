@@ -1,7 +1,12 @@
 import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export const goalAnimation = (refContainer: any, refSlate: any) => {
-  return gsap.to(refSlate.current, {
+export const goalAnimation = (
+  refContainer: any,
+  refSlate: any,
+  scroller: HTMLElement
+) => {
+  const tween = gsap.to(refSlate.current, {
     opacity: 1,
     zIndex: 100,
     duration: 0.2,
@@ -12,7 +17,14 @@ export const goalAnimation = (refContainer: any, refSlate: any) => {
       end: "+=300px",
       scrub: 0.5,
       toggleActions: "play reverse play reverse",
-      scroller: document.querySelector("[data-scroll-container]"),
+      scroller: scroller,
     },
   });
+
+  return () => {
+    if (tween.scrollTrigger) {
+      tween.scrollTrigger.kill();
+    }
+    tween.kill();
+  };
 };
